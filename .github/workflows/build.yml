@@ -18,11 +18,14 @@ jobs:
       with:
         distribution: 'temurin'
         java-version: '17'
-        cache: 'gradle'
 
-    - name: APK Derleme (Her Şeyi GitHub İndirsin)
-      run: |
-        gradle assembleDebug
+    - name: Resmi Kurulum (Gradle 8.4)
+      uses: gradle/actions/setup-gradle@v3
+      with:
+        gradle-version: '8.4'
+
+    - name: APK Derleme
+      run: gradle assembleDebug
 
     - name: APK'yı Çıktı Olarak Ver
       uses: actions/upload-artifact@v4
