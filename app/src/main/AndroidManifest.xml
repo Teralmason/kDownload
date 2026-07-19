@@ -9,14 +9,15 @@
         android:supportsRtl="true">
         
         <service
-    android:name="com.otomatik.indirici.MyTileService"
-    android:label="Video İndirici"
-    android:icon="@drawable/ic_tile"
-    android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+    android:name="com.otomatik.indirici.MyAccessibilityService"
+    android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
     android:exported="true">
     <intent-filter>
-        <action android:name="android.service.quicksettings.action.QS_TILE" />
+        <action android:name="android.accessibilityservice.AccessibilityService" />
     </intent-filter>
+    <meta-data
+        android:name="android.accessibilityservice.config"
+        android:resource="@xml/accessibility_service_config" />
 </service>
 
         <!-- YENİ EKLENEN ERİŞİLEBİLİRLİK SERVİSİ -->
