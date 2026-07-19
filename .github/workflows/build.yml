@@ -20,11 +20,9 @@ jobs:
         java-version: '17'
         cache: 'gradle'
 
-    - name: Gradle Değiştirme ve Derleme İzni
-      run: chmod +x gradlew || true
-
     - name: APK Derleme (Her Şeyi GitHub İndirsin)
-      run: ./gradlew assembleDebug --stacktrace
+      run: |
+        gradle assembleDebug
 
     - name: APK'yı Çıktı Olarak Ver
       uses: actions/upload-artifact@v4
