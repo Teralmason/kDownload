@@ -11,14 +11,22 @@ import android.widget.Toast
 // Bu Activity görünmezdir. Tile'a basınca açılır, panoyu okur, indirir, kapanır.
 class TriggerActivity : Activity() {
 
+    private var handled = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
-    override fun onResume() {
-        super.onResume()
+    // onResume yerine onWindowFocusChanged kullanıyoruz çünkü pano okumak için
+    // pencerenin GERÇEKTEN odağı almış olması gerekiyor (onResume bunu garanti etmez).
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (!hasFocus || handled) return
+        handled = true
+        readClipboardAndDownload()
+    }
 
-        // Activity artık odakta, pano şimdi okunabilir
+    private fun readClipboardAndDownload() {
         val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clip = clipboard.primaryClip
         val link = if (clip != null && clip.itemCount > 0) clip.getItemAt(0).text?.toString() else null
