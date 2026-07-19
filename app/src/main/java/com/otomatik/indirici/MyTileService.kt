@@ -1,13 +1,14 @@
 package com.otomatik.indirici
 
+import android.app.PendingIntent
+import android.content.Intent
 import android.graphics.drawable.Icon
+import android.os.Build
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
-import android.widget.Toast
 
 class MyTileService : TileService() {
 
-    // Tile durum çubuğunda görünür hale geldiğinde (ikon, etiket ayarlanır)
     override fun onStartListening() {
         super.onStartListening()
         qsTile.icon = Icon.createWithResource(this, R.drawable.ic_tile)
@@ -15,17 +16,25 @@ class MyTileService : TileService() {
         qsTile.updateTile()
     }
 
-    // Butona tıklandığında çalışacak olan fonksiyon
     override fun onClick() {
         super.onClick()
 
-        // Şimdilik test için ekrana bir mesaj bastıralım
-        Toast.makeText(applicationContext, "Butona basıldı! Servis tetikleniyor...", Toast.LENGTH_SHORT).show()
+        val intent = Intent(this, TriggerActivity::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
 
-        // TODO: Burada Erişilebilirlik Servisine (Accessibility) sinyal gönderip linki yakalayacağız.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            val pendingIntent = PendingIntent.getActivity(
+                this, 0, intent,
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+            )
+            startActivityAndCollapse(pendingIntent)
+        } else {
+            @Suppress("DEPRECATION")
+            startActivityAndCollapse(intent)
+        }
     }
 
-    // Buton durum çubuğuna eklendiğinde
     override fun onTileAdded() {
         super.onTileAdded()
         qsTile.label = "Videoyu İndir"
