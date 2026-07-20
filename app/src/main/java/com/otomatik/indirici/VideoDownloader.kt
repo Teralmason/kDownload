@@ -22,7 +22,7 @@ object VideoDownloader {
             ?: return DownloadResult.Failure("Video linki alınamadı. Detay: ${CobaltClient.lastError}")
 
         val bytes = fetchBytes(videoUrl)
-            ?: return DownloadResult.Failure("Video linki bulundu ama dosya indirilemedi")
+            ?: return DownloadResult.Failure("İndirme başarısız. Detay: $lastFetchError")
 
         if (bytes.size < 20_000) {
             return DownloadResult.Failure("İndirilen dosya çok küçük (${bytes.size} byte) - muhtemelen video değil, hata sayfası")
@@ -36,25 +36,37 @@ object VideoDownloader {
         }
     }
 
+    var lastFetchError: String = ""
+        private set
+
     private fun fetchBytes(videoUrl: String): ByteArray? {
-        val conn = URL(videoUrl).openConnection() as HttpURLConnection
-        conn.setRequestProperty("User-Agent", USER_AGENT)
-        if (videoUrl.contains("tiktok", ignoreCase = true) ||
-            videoUrl.contains("byteoversea", ignoreCase = true) ||
-            videoUrl.contains("bytecdn", ignoreCase = true) ||
-            videoUrl.contains("muscdn", ignoreCase = true)
-        ) {
-            conn.setRequestProperty("Referer", "https://www.tiktok.com/")
-        }
-        conn.connectTimeout = 15000
-        conn.readTimeout = 30000
+        var conn: HttpURLConnection? = null
         return try {
+            conn = URL(videoUrl).openConnection() as HttpURLConnection
+            conn.setRequestProperty("User-Agent", USER_AGENT)
+            if (videoUrl.contains("tiktok", ignoreCase = true) ||
+                videoUrl.contains("byteoversea", ignoreCase = true) ||
+                videoUrl.contains("bytecdn", ignoreCase = true) ||
+                videoUrl.contains("muscdn", ignoreCase = true)
+            ) {
+                conn.setRequestProperty("Referer", "https://www.tiktok.com/")
+            }
+            conn.connectTimeout = 15000
+            conn.readTimeout = 30000
+            conn.instanceFollowRedirects = true
+
+            val code = conn.responseCode
+            if (code !in 200..299) {
+                val errBody = conn.errorStream?.bufferedReader()?.use { it.readText() } ?: ""
+                lastFetchError = "HTTP $code döndü. URL: ${videoUrl.take(100)} Gövde: ${errBody.take(150)}"
+                return null
+            }
             conn.inputStream.use { it.readBytes() }
         } catch (e: Exception) {
-            e.printStackTrace()
+            lastFetchError = "${e.javaClass.simpleName}: ${e.message} - URL: ${videoUrl.take(100)}"
             null
         } finally {
-            conn.disconnect()
+            conn?.disconnect()
         }
     }
 
