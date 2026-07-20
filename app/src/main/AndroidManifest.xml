@@ -5,8 +5,20 @@
 
     <application
         android:allowBackup="true"
-        android:label="Video İndirici"
+        android:label="kDownload"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:theme="@style/Theme.VideoIndirici"
         android:supportsRtl="true">
+
+        <activity
+            android:name="com.otomatik.indirici.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name="com.otomatik.indirici.TriggerActivity"
@@ -17,7 +29,7 @@
 
         <service
             android:name="com.otomatik.indirici.MyTileService"
-            android:label="Video İndirici"
+            android:label="kDownload"
             android:icon="@drawable/ic_tile"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
             android:exported="true">
