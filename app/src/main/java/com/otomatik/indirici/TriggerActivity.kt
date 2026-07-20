@@ -1,6 +1,7 @@
 package com.otomatik.indirici
 
 import android.app.Activity
+import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
@@ -44,11 +45,17 @@ class TriggerActivity : Activity() {
                 DownloadResult.Failure("Beklenmeyen hata: ${e.message}")
             }
             mainHandler.post {
-                val message = when (result) {
-                    is DownloadResult.Success -> "Video galeriye kaydedildi ✅"
-                    is DownloadResult.Failure -> "❌ ${result.reason}"
+                when (result) {
+                    is DownloadResult.Success -> {
+                        Toast.makeText(applicationContext, "Video galeriye kaydedildi ✅", Toast.LENGTH_LONG).show()
+                    }
+                    is DownloadResult.Failure -> {
+                        // Hata mesajını okumaya çalışmak yerine direkt panoya kopyalıyoruz
+                        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                        clipboard.setPrimaryClip(ClipData.newPlainText("hata", result.reason))
+                        Toast.makeText(applicationContext, "❌ Hata panoya kopyalandı, yapıştır", Toast.LENGTH_LONG).show()
+                    }
                 }
-                Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
                 finish()
             }
         }.start()
