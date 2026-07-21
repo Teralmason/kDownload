@@ -93,7 +93,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="28dp"
-                android:text="2. Videoyu paylaş, linki kopyala"
+                android:text="2. Linki kopyala"
                 android:textColor="@color/text_primary"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -125,7 +125,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="28dp"
-                android:text="3. Kısayola dokun, bekle"
+                android:text="3. Kısayola dokun ve bekle"
                 android:textColor="@color/text_primary"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -135,7 +135,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:text="Panelden kısayola dokun. Ekran kısa bir an titreşir gibi olur, birkaç saniye içinde video galerine iner."
+                android:text="Panelden kısayola dokun. Ekran kısa bir süreliğine donar ve birkaç saniye içinde video galerine iner."
                 android:textColor="@color/text_secondary"
                 android:textSize="15sp"
                 android:lineSpacingExtra="4dp" />
