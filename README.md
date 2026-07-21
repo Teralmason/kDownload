@@ -8,10 +8,10 @@
 
 ##  Özellikler
 
-* ** Hızlı Durum Çubuğu Kısayolu:** Uygulamayı açmaya gerek kalmadan Android Quick Settings (Tile) paneli üzerinden indirme başlatma.
-* ** Otomatik Pano Algılama:** Kopyalanan video bağlantısını anında algılar ve arka planda indirmeyi tamamlar.
-* ** Çoklu Platform Desteği:** Instagram, TikTok ve X (Twitter) bağlantılarıyla tam uyum.
-* ** Modern ve Sade Arayüz:** Göz yormayan tasarım ve adım adım yönlendiren onboarding ekranı.
+* **Hızlı Durum Çubuğu Kısayolu:** Uygulamayı açmaya gerek kalmadan Android Quick Settings (Tile) paneli üzerinden indirme başlatma.
+* **Otomatik Pano Algılama:** Kopyalanan video bağlantısını anında algılar ve arka planda indirmeyi tamamlar.
+* **Çoklu Platform Desteği:** Instagram, TikTok ve X (Twitter) bağlantılarıyla tam uyum.
+* **Modern ve Sade Arayüz:** Göz yormayan tasarım ve adım adım yönlendiren onboarding ekranı.
 
 ---
 
